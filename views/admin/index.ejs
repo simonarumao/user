@@ -1,0 +1,461 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+	<!-- Add these script tags to your head or body section -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+	<meta charset="UTF-8"> 
+	<meta http-equiv="X-UA-Compatible"
+		content="IE=edge"> 
+	<meta name="viewport"
+		content="width=device-width, 
+				initial-scale=1.0"> 
+	<title>ADMIN DASHBOARD</title> 
+	<link rel="stylesheet"
+		href="../admin/css/main.css"> 
+	<link rel="stylesheet"
+		href="../admin/css/responsive.css"> 
+
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head> 
+
+<body> 
+	
+	<!-- for header part -->
+	<header> 
+
+		<div class="logosec"> 
+			<div class="logo">Admin Panel</div> 
+			<img src= 
+"../admin/images/azadi_logo.png"
+				class="icn menuicn"
+				id="menuicn"
+				alt="menu-icon"> 
+		</div> 
+
+	
+
+		<div class="searchbar">
+			<input type="text" id="searchInput" placeholder="Search">
+			<div class="searchbtn" onclick="handleSearch()">
+				<img src="../admin/images/emblem-dark.png" class="icn srchicn" alt="search-icon">
+			</div>
+		</div>
+		
+		<div class="message"> 
+			<div class="circle"></div> 
+			<img src= 
+"../admin/images/G20_Logo.jpg"
+				class="icn"
+				alt=""> 
+			<div class="dp"> 
+			<img src= 
+"../admin/images/NDMA Logo.png"
+					class="dpicn"
+					alt="dp"> 
+			</div> 
+		</div> 
+
+	</header> 
+
+	<div class="main-container"> 
+		<div class="navcontainer"> 
+			<nav class="nav"> 
+				<div class="nav-upper-options"> 
+					<div class="nav-option option1"> 
+						<img src="../admin/images/dashboards.png" 
+
+							class="nav-img"
+							alt="dashboard"> 
+						<h3> Dashboard</h3> 
+					</div> 
+ 
+       
+					<div class="option2 nav-option"> 
+						<img src="../admin/images/alert.png" 
+							class="nav-img"
+							alt="articles"> 
+              <form action="/execute_script" method="post" >
+                <button class="btn">Manual Alert</button>
+               </form>
+  
+					</div> 
+      
+
+					<div class="nav-option option3" onclick="generateExcelData()"> 
+						<img src="../admin/images/report.png" 
+							class="nav-img"
+							alt="report"> 
+						<h3> Generate Report</h3>
+					</div>
+					
+					<!-- <div class="nav-option option4"> 
+						<img src= 
+"https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png"
+							class="nav-img"
+							alt="institution"> 
+						<h3> Institution</h3> 
+					</div>  -->
+
+					<!-- <div class="nav-option option5"> 
+						<img src= 
+"https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png"
+							class="nav-img"
+							alt="blog"> 
+						<h3> Profile</h3> 
+					</div>  -->
+
+					<div class="nav-option option6"> 
+						<img src="../admin/images/setting.png" 
+							class="nav-img"
+							alt="settings"> 
+						<h3> Settings</h3> 
+					</div> 
+    
+         
+					<div class="nav-option logout"> 
+						<img src="../admin/images/logout.png" 
+							class="nav-img"
+							alt="logout"> 
+						  <form action="/logout" method="get" class="btn">
+                <button class="btn">Logout</button>
+               </form>
+					</div> 
+     
+
+
+				</div> 
+			</nav> 
+		</div> 
+		<div class="main"> 
+
+			<div class="searchbar2"> 
+				<input type="text"
+					name=""
+					id=""
+					placeholder="Search"> 
+				<div class="searchbtn"> 
+				<img src= 
+"https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
+						class="icn srchicn"
+						alt="search-button"> 
+				</div> 
+			</div> 
+
+			<div class="box-container"> 
+
+				<div class="box box1"> 
+					<div class="text"> 
+						<h2 class="topic-heading">60.5k</h2> 
+						<h2 class="topic">Article Views</h2> 
+					</div> 
+
+					<img src="../admin/images/vieww.png" 
+						alt="Views"> 
+				</div> 
+
+				<div class="box box2"> 
+					<div class="text"> 
+						<h2 class="topic-heading">150</h2> 
+						<h2 class="topic">Likes</h2> 
+					</div> 
+
+					<img src="../admin/images/like.png" 
+					
+						alt="likes"> 
+				</div> 
+
+				<div class="box box3"> 
+					<div class="text"> 
+						<h2 class="topic-heading">320</h2> 
+						<h2 class="topic">Comments</h2> 
+					</div> 
+
+					
+					<img src="../admin/images/comment.png" 
+						alt="comments"> 
+				</div> 
+
+				<div class="box box4"> 
+					<div class="text"> 
+						<h2 class="topic-heading">70</h2> 
+						<h2 class="topic">Published</h2> 
+					</div> 
+
+				
+					<img src="../admin/images/published.png"  alt="published"> 
+				</div> 
+			</div> 
+
+			<!-- Container for Map, Altitude Graph, and Real-Time Updates -->
+<div id="left-container">
+    <div class="map-altitude-updates-container">
+        <!-- Map -->
+        <div id="map"></div>
+
+        <!-- Container for Altitude Graph and Real-Time Updates -->
+        <div class="altitude-updates-container">
+            <!-- Altitude Graph -->
+            <div id="graph-container">
+                <h2>Altitude Graph</h2>
+                <canvas id="altitudeGraph"></canvas>
+            </div>
+
+            <!-- Real-Time Updates -->
+            <div id="realTimeUpdates">
+                <h2>Real-Time Updates</h2>
+                <p id="dateTime">Date and Time: </p>
+                <p id="day">Day: </p>
+                <p id="location">Current Location: </p>
+                <p id="altitude">Altitude: </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+			
+
+<!-- 		
+				<div id="left-container">
+				  <div id="map"></div>
+				</div>
+			  
+				<div id="right-container">
+				  <div id="realTimeUpdates">
+					<h2>Real-Time Updates</h2>
+					<p id="dateTime">Date and Time: </p>
+					<p id="day">Day: </p>
+					<p id="location">Current Location: </p>
+					<p id="altitude">Altitude: </p>
+				  </div>
+			  
+				  <div id="graph-container">
+					<h2>Altitude Graph</h2>
+					<canvas id="altitudeGraph"></canvas>
+				  </div>
+				</div> -->
+
+				<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+      <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                const map = L.map('map').setView([24.8607, 67.0011], 4); // Karachi, Pakistan
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+          
+                const pointA = L.latLng(24.8607, 67.0011); // Karachi, Pakistan
+                const pointB = L.latLng(19.0760, 72.8777); // Mumbai, India
+          
+                // Marker
+                const rocketIcon = L.icon({
+                  iconUrl: '../admin/images/rocket.png',
+                  iconSize: [40, 40],  // Adjust the dimensions based on your rocket icon image
+                  iconAnchor: [20, 20],
+                });
+          
+                const marker = L.marker(pointA, { icon: rocketIcon }).addTo(map);
+          
+                // Route
+                const polyline = L.polyline([pointA, pointB], { color: 'blue' }).addTo(map);
+          
+                // Circle
+                let circle; // Define the circle variable outside the functions
+          
+                let startTime;
+                const duration = 10 * 1000; // 10 seconds
+                // Altitude Graph
+          const altitudeData = [];
+          const altitudeGraph = new Chart(document.getElementById('altitudeGraph').getContext('2d'), {
+            type: 'line',
+            data: {
+              labels: [],
+              datasets: [{
+                label: 'Altitude (ft)',
+                borderColor: 'yellow',
+                backgroundColor: 'black',
+                data: altitudeData,
+              }],
+            },
+            options: {
+              scales: {
+                x: {
+                  type: 'linear',
+                  position: 'bottom',
+                  ticks: {
+                    callback: (value) => `${value.toFixed(1)}s`,
+                  },
+                },
+                y: {
+                  min: 0,
+                },
+              },
+            },
+          });
+    
+          function moveMarker() {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - startTime;
+    
+            if (!startTime) {
+              startTime = currentTime;
+              requestAnimationFrame(moveMarker);
+              return;
+            }
+    
+            if (elapsedTime < duration) {
+              const t = elapsedTime / duration;
+              const latLng = calculatePosition(pointA, pointB, t);
+    
+              marker.setLatLng(latLng);
+    
+              if (t >= 0.75 && !circle) {
+                // Draw circle of radius 5000 on Point B when altitude changes (75% completion)
+                circle = L.circle(pointB, { radius: 5000, color: 'red' }).addTo(map);
+                circle.setStyle({ fillOpacity: 0.2 }); // Adjust fill opacity if needed
+              }
+    
+              map.setView(latLng, map.getZoom() + 0.2, { animate: false });
+    
+              updateInfo(latLng, t);
+              updateAltitudeGraph(t, elapsedTime);
+    
+              requestAnimationFrame(moveMarker);
+            } else {
+              // Marker reached point B
+              map.setView(pointB, 12); // Set a fixed zoom level at Point B
+              setAltitudeToZero();
+              blastAnimation();
+              blinkBackground(); // Call blinkBackground when altitude changes
+              drawCircleAtPointB();
+            }
+          }
+    
+          function calculatePosition(start, end, t) {
+            return L.latLng(
+              start.lat + (end.lat - start.lat) * t,
+              start.lng + (end.lng - start.lng) * t
+            );
+          }
+    
+          function updateAltitudeGraph(t, elapsedTime) {
+            const altitude = getAltitude(t);
+            altitudeData.push({ x: elapsedTime / 1000, y: altitude });
+            altitudeGraph.data.labels.push((elapsedTime / 1000).toFixed(1));
+            altitudeGraph.update();
+          }
+    
+          function updateInfo(latLng, t) {
+            const dateTimeElem = document.getElementById('dateTime');
+            const dayElem = document.getElementById('day');
+            const locationElem = document.getElementById('location');
+            const altitudeElem = document.getElementById('altitude');
+    
+            const currentDate = new Date();
+            const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+            dateTimeElem.textContent = `Date and Time: ${currentDate.toLocaleString()}`;
+            dayElem.textContent = `Day: ${dayOfWeek[currentDate.getDay()]}`;
+            locationElem.textContent = `Current Location: ${getCountryName(latLng)}`;
+            altitudeElem.textContent = `Altitude: ${getAltitude(t)} ft`;
+          }
+    
+          function setAltitudeToZero() {
+            const altitudeElem = document.getElementById('altitude');
+            altitudeElem.textContent = 'Altitude: 0 ft';
+          }
+    
+          function getCountryName(latLng) {
+            // This is a simple example, you might want to use a reverse geocoding API for accurate country names
+            return latLng.lng > 65 ? 'India' : 'Pakistan';
+          }
+    
+          function getAltitude(t) {
+            if (t <= 0.1) return 5000;
+            else if (t <= 0.3) return 4500;
+            else if (t <= 0.5) return 4000;
+            else if (t <= 0.6) return 3800;
+            else if (t <= 0.75) return 2000;
+            else if (t <= 0.9) return 1000;
+            else if (t <= 0.95) return 500;
+            else return 0;
+          }
+    
+          function blinkBackground() {
+            // Add blinking background effect
+            document.body.style.backgroundColor = 'red';
+            setTimeout(() => {
+              document.body.style.backgroundColor = 'white';
+            }, 500);
+          }
+    
+          function blastAnimation() {
+            const blastElem = document.createElement('div');
+            blastElem.className = 'blast';
+            document.body.appendChild(blastElem);
+            setTimeout(() => {
+              blastElem.remove();
+            }, 1000);
+          }
+    
+          function drawCircleAtPointB() {
+            if (getAltitude(0.75) === 2000) {
+              circle = L.circle(pointB, { radius: 5000, color: 'red' }).addTo(map);
+              circle.setStyle({ fillOpacity: 0.2 });
+            }
+          }
+    
+          moveMarker();
+     
+       });
+
+
+	   function generateExcelData() {
+  // Replace this with your actual report data
+  const reportData = [
+    ['Name', 'Age', 'Country'],
+    ['John Doe', 30, 'USA'],
+    ['Jane Smith', 25, 'Canada'],
+    ['Bob Johnson', 40, 'UK'],
+  ];
+
+  // Create a worksheet
+  const ws = XLSX.utils.aoa_to_sheet(reportData);
+
+  // Create a workbook
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Report');
+
+  // Convert the workbook to a binary Excel file (xlsx format)
+  const excelFile = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
+
+  // Convert the binary data to a Blob
+  const blob = new Blob([s2ab(excelFile)], { type: 'application/octet-stream' });
+
+  // Create a download link
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+
+  // Set the file name
+  link.download = 'report.xlsx';
+
+  // Append the link to the document and trigger the download
+  document.body.appendChild(link);
+  link.click();
+
+  // Clean up
+  document.body.removeChild(link);
+}
+
+// Utility function to convert string to array buffer
+function s2ab(s) {
+  const buf = new ArrayBuffer(s.length);
+  const view = new Uint8Array(buf);
+  for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+  return buf;
+}
+
+</script>
+</body> 
+</html>

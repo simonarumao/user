@@ -1,0 +1,109 @@
+<% layout('layout/boilerplate') %>
+<div class="alert-box">
+  <h2>ALERT</h2>
+  <marquee>
+    <span class="marquee_margin__Rni52" style="cursor: pointer"
+      >***
+      <strong
+        >No Alerts | Keep Checking for Alerts | Website In Progress***</strong
+      >
+    </span>
+  </marquee>
+</div>
+
+<div class="carousel">
+  <div class="slides">
+    <div class="slide" id="slide1">
+      <a
+        href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+      >
+        <img
+          src="user/images/Prime Minister's Ten Point Agenda for Disaster Risk Reduction_0.png"
+          alt="Image 1"
+        />
+      </a>
+    </div>
+
+    <div id="container">
+      <div class="map-section">
+        <div id="map"></div>
+      </div>
+
+      <div id="info-container">
+        <div id="updates-container">
+          <h2>Real-time Updates</h2>
+          <div id="updates-content">
+            Area covered by the radius will be displayed here
+            <p>
+              <strong>Area Covered by Radiation:</strong>
+              <span id="area-covered">Calculating...</span>
+            </p>
+          </div>
+        </div>
+
+        <button class="btn">Contact</button>
+        <button class="btn">SOS</button>
+
+        <div id="evacuation-tips">
+          <h2>All Evacuation Tips:</h2>
+    <ul>
+        <% evacuationTips.forEach(function(tip) { %>
+            <li><%= tip.title %></li>
+            <ul>
+                <% tip.tips.forEach(function(subTip) { %>
+                    <li><%= subTip %></li>
+                <% }); %>
+            </ul>
+        <% }); %>
+    </ul>
+            
+            
+        </div>
+        <h6>Developed by @teamCodiee</h6>
+      </div>
+    </div>
+    
+   <script src="user/javascript/nukemap.js"></script>
+
+    <div class="slideshow-container"></div>
+    <div class="about-us-section">
+      <div class="about-us-content">
+        <h2>About Us</h2>
+        <p>
+          Welcome to our website! Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit. Nullam ac urna eu felis dapibus condimentum sit amet
+          a odio. Integer convallis, ligula vel aliquam dapibus, lacus nulla
+          fermentum nisi, sit amet sagittis elit quam vel turpis.
+        </p>
+        <p>
+          Our mission is to provide quality products/services and exceed
+          customer expectations. Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit. Sed accumsan dolor sit amet mi fermentum varius.
+          Proin auctor auctor augue, non fermentum felis hendrerit vel.
+        </p>
+        <p>
+          Meet our dedicated team of professionals who work tirelessly to
+          achieve our goals and deliver outstanding results to our clients.
+        </p>
+      </div>
+      <div class="image-section">
+        <div class="image-card">
+          <img src="user/images/Akash-SAM-on-t-72.jpg" alt="Person 1" />
+          <p>Description 1</p>
+        </div>
+        <div class="image-card">
+          <img src="user/images/geotargeted.png" alt="Person 2" />
+          <p>Description 2</p>
+        </div>
+        <div class="image-card">
+          <img src="user/images/multi-min (1).png" alt="Person 3" />
+          <p>Description 3</p>
+        </div>
+        <div class="image-card">
+          <img src="user/images/alertt.jpg" alt="Person 4" />
+          <p>Description 4</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
