@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missile Launcher</title>
+</head>
+<body>
+    <h1>Missile Launcher</h1>
+    <button id="launchButton">Launch</button>
+    <script>
+        // WebSocket connection to your server
+        const socket = new WebSocket('ws://10.1.129.173:3000'); // Update 'localhost' with your server's IP if needed
+
+        socket.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        // Send a launch message when the button is clicked
+        document.getElementById('launchButton').onclick = function() {
+            socket.send('launch');
+            console.log('Launch message sent');
+            console.log("hello worldf")
+        };
+    </script>
+</body>
+</html>

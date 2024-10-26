@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const WebSocket = require('ws');
+const axios = require('axios');
 
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -18,6 +19,10 @@ const { stdout, stderr } = require('process');
 const cors = require('cors');
 const bodyparser = require('body-parser');
 const twilio = require('twilio')
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/adminlog')
@@ -47,6 +52,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+wss.on('connection', (ws) => {
+  console.log('A new client connected');
+
+  ws.on('message', (message) => {
+      const msgString = message.toString();
+      console.log('Received launch message:', msgString);
+
+      // Broadcast the launch message to all clients
+      wss.clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+              client.send(message);
+          }
+      });
+  });
+});
 
 app.get('/api/randomLocation', async (req, res) => {
   try {
@@ -68,13 +88,13 @@ app.get('/api/randomLocation', async (req, res) => {
 });
 
 //
-const accountSid = 'ACda142b2f7c984f7f7cc2d6c0612539bf';
+const accountSid = 'ACe95aa9c696699e719bbe14a27b20120d';
 
 // 
-const authToken = '07b39b4e265c763d0b3c2e253aa58e3f';
+const authToken = '1a5d11bd82309bf9a9327f643bf6ce95';
 
 //
-const fromNumber = '+19704144167';
+const fromNumber = '+18562824571';
 
 const client = twilio(accountSid, authToken);
 
@@ -299,14 +319,24 @@ app.get('/setup', async (req, res) => {
 });
 app.get('/', async (req, res) => {
   try {
-    const tips = await EvacuationTips.find({})
-    res.render('User/index',{evacuationTips:tips})
-  }
-  catch (err)
-  {
-    console.error(err);
-    res.status(500).send('Internal Server Error')
-  }
+    // Request data from Flask server
+    const response = await axios.get('http://127.0.0.1:5001/get_facilities', {
+        params: {
+            lat: 19.071636478920574,
+            lon: 72.87461639948543,
+            radius: 1000
+        }
+    });
+
+    // Render the data in the frontend
+    const tips = response.data.evacuation_tips;
+    const facilities = response.data.facilities;
+    res.render('user/index', { evacuationTips: tips, facilities: facilities });
+
+} catch (err) {
+    console.error("Error fetching data from Flask server:", err.message);
+    res.status(500).send('Internal Server Error');
+}
 })
 
 app.post('/api/storeUserLocation',express.json(),(req,res)=>{
@@ -329,6 +359,6 @@ app.get('/do&dont', (req, res) => {
 
 
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log('server is running on the port 3000');
 })

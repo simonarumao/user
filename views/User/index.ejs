@@ -43,22 +43,23 @@
 
         <button class="btn">Contact</button>
         <button class="btn">SOS</button>
-
-        <div id="evacuation-tips">
-          <h2>All Evacuation Tips:</h2>
-    <ul>
-        <% evacuationTips.forEach(function(tip) { %>
-            <li><%= tip.title %></li>
+        <h2>Evacuation Tips</h2>
+        <p><%= evacuationTips || "No tips available." %></p>
+    
+        <h2>Nearby Facilities</h2>
+        <% if (facilities.length > 0) { %>
             <ul>
-                <% tip.tips.forEach(function(subTip) { %>
-                    <li><%= subTip %></li>
-                <% }); %>
+                <% facilities.forEach(facility => { %>
+                    <li>
+                        <span>Name: <%= facility.tags?.name || "Unnamed Facility" %></span><br>
+                        <span class="facility-type">Type: <%= facility.tags?.amenity || facility.tags?.shop || "Building" %></span><br>
+                        <span>Latitude: <%= facility.lat %>, Longitude: <%= facility.lon %></span>
+                    </li>
+                <% }) %>
             </ul>
-        <% }); %>
-    </ul>
-            
-            
-        </div>
+        <% } else { %>
+            <p>No nearby facilities found.</p>
+        <% } %>
         <h6>Developed by @teamCodiee</h6>
       </div>
     </div>
