@@ -1,9 +1,7 @@
-Here’s a properly formatted Markdown for your `README.md` file that you can directly use on GitHub:
 
 ```markdown
-# Project Name
+# Sentinel Shield
 
-A brief description of your project goes here. This project includes a Node.js server and a Python server, both running concurrently on separate ports to achieve [goal or functionality].
 
 ## Prerequisites
 
@@ -100,3 +98,5 @@ Contributions are welcome! Feel free to open a pull request or submit issues for
 
 Thank you for using this project. If you find it useful, please consider giving a ⭐ on GitHub!
 ```
+
+Feel free to modify any parts of it to better fit your project's specifics!
