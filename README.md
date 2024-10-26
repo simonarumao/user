@@ -50,7 +50,7 @@ Make sure you have the following installed:
    node app.js
    ```
 
-   This should start the Node server on `http://localhost:<Node_server_port>`. By default, this port is set in `app.js`, so ensure it’s configured to your preferred port if necessary.
+   This should start the Node server on `http://localhost:3000`. By default, this port is set in `app.js`, so ensure it’s configured to your preferred port if necessary.
 
 2. **Run the Python Server**
 
@@ -60,12 +60,12 @@ Make sure you have the following installed:
    python3 server.py
    ```
 
-   This will start the Python server on `http://localhost:<Python_server_port>`. Make sure this port differs from the Node.js server port to avoid conflicts.
+   This will start the Python server on `http://localhost:5000`. Make sure this port differs from the Node.js server port to avoid conflicts.
 
 ## Accessing the Application
 
-- **Node.js Server:** Go to `http://localhost:<Node_server_port>` in your browser.
-- **Python Server:** Go to `http://localhost:<Python_server_port>` in your browser.
+- **Node.js Server:** Go to `http://localhost:3000` in your browser.
+- **Python Server:** Go to `http://localhost:5000` in your browser.
 
 Both servers must be running simultaneously to enable the full functionality of the application.
 
